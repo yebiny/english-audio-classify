@@ -88,6 +88,15 @@ class DataPreprocess():
         y = np.sign(x)*(np.log(1+(mu*np.abs(x))))/(np.log(1+mu))
         return y 
     
+    def draw_audio_with_quantized(self, cidx, idx):
+        file_list = self.get_file_list(cidx)
+        f= file_list[idx]
+        x, t = self.get_data_from_wav(f)
+        x_quant = self.softmax_quantize(x)
+        
+        self.draw_audio(x, t, title=f, color=self.colors[cidx])
+        self.draw_audio(x_quant, t, title='quantized', color=self.colors[cidx])
+
     def data_process(self, N):
         x_data=[]
         y_data=[]
